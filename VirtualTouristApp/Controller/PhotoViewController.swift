@@ -11,11 +11,19 @@ import UIKit
 import CoreData
 import MapKit
 
-class PhotoViewController {
+class PhotoViewController: UIViewController {
+    
+    // MARK: IBOutlets
+
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var newCollection: UIButton!
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var noPhotos: UILabel!
     
     
-    // MARK: Variables
     
-    var coordinate: CLLocationCoordinate2D!
-    var corePin: Pin!
+    
+    
+    
 }
