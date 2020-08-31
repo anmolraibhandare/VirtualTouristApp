@@ -16,6 +16,8 @@
 		260A34CA24FD62B100008183 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34C924FD62B100008183 /* DataController.swift */; };
 		260A34CC24FD69D400008183 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34CB24FD69D400008183 /* MapViewController.swift */; };
 		260A34CE24FD69E300008183 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34CD24FD69E300008183 /* PhotoViewController.swift */; };
+		260A34D224FD8D7B00008183 /* FlickrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34D124FD8D7A00008183 /* FlickrAPI.swift */; };
+		260A34D424FD8DA900008183 /* FlickrImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34D324FD8DA900008183 /* FlickrImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		260A34C924FD62B100008183 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		260A34CB24FD69D400008183 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		260A34CD24FD69E300008183 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		260A34D124FD8D7A00008183 /* FlickrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
+		260A34D324FD8DA900008183 /* FlickrImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,8 @@
 		260A34C824FD625500008183 /* Networks */ = {
 			isa = PBXGroup;
 			children = (
+				260A34D124FD8D7A00008183 /* FlickrAPI.swift */,
+				260A34D324FD8DA900008183 /* FlickrImage.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -180,6 +186,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				260A34CA24FD62B100008183 /* DataController.swift in Sources */,
+				260A34D224FD8D7B00008183 /* FlickrAPI.swift in Sources */,
+				260A34D424FD8DA900008183 /* FlickrImage.swift in Sources */,
 				260A34B924FD5F9700008183 /* VirtualTouristApp.xcdatamodeld in Sources */,
 				260A34AF24FD5F9700008183 /* AppDelegate.swift in Sources */,
 				260A34CC24FD69D400008183 /* MapViewController.swift in Sources */,
