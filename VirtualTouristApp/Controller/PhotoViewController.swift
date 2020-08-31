@@ -1,5 +1,5 @@
 //
-//  DataController.swift
+//  PhotoViewController.swift
 //  VirtualTouristApp
 //
 //  Created by Anmol Raibhandare on 8/31/20.
@@ -7,12 +7,6 @@
 //
 
 import Foundation
-import CoreData
+class PhotoViewController {
 
-class DataController {
-    
-    
-    
-    
-    
 }

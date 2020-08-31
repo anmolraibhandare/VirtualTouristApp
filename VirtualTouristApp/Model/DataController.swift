@@ -67,5 +67,11 @@ extension DataController{
             self.autoSaveViewContext(interval: interval)
         }
     }
+    
+    func saveContext() throws {
+        if context.hasChanges {
+            try context.save()
+        }
+    }
 }
 
