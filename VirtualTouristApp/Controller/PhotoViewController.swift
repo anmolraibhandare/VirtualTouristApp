@@ -7,6 +7,15 @@
 //
 
 import Foundation
-class PhotoViewController {
+import UIKit
+import CoreData
+import MapKit
 
+class PhotoViewController {
+    
+    
+    // MARK: Variables
+    
+    var coordinate: CLLocationCoordinate2D!
+    var corePin: Pin!
 }

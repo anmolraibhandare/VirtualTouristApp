@@ -69,8 +69,8 @@ extension DataController{
     }
     
     func saveContext() throws {
-        if context.hasChanges {
-            try context.save()
+        if viewContext.hasChanges {
+            try viewContext.save()
         }
     }
 }
