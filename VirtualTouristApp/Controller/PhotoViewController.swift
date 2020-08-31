@@ -12,14 +12,6 @@ import CoreData
 import MapKit
 
 class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return
-    }
-    
     
     // MARK: IBOutlets
 
@@ -29,8 +21,7 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var noPhotos: UILabel!
     
-//    var fetchedResultsController:NSFetchedResultsController<Photo>!
-    
+    var coordinate: CLLocationCoordinate2D!
     let spacing:CGFloat = 5
     let totalCells:Int = 25
     var currentPin: Pin!
@@ -55,21 +46,6 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
 
         return NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DataController.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
     }
-    
-//    fileprivate func setUpFetchedResultsController() {
-//        let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
-//
-//        let predicate = NSPredicate(format: "pin == %@", currentPin)
-//        fetchRequest.predicate = predicate
-//
-//        fetchRequest.sortDescriptors = []
-//        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: DataController.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-//        do{
-//            try fetchedResultsController.performFetch()
-//        } catch {
-//            fatalError("the fetch could not be performed: \(error.localizedDescription)")
-//        }
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,17 +79,6 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
             displayNewResult()
         }
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        setUpFetchedResultsController()
-//
-//    }
-//
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        fetchedResultsController = nil
-//    }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -216,21 +181,91 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
     
     func getFlickrImages(completion: @escaping (_ result: [FlickrImage]?) -> Void) {
         
-        
-        
-        
+        var resultImages:[FlickrImage] = []
+        FlickrAPI.getImage(latitude: coordinate.latitude, longitude: coordinate.longitude) { (success, flickrImages) in
+            if success {
+                if flickrImages!.count > self.totalCells {
+                    var temp:[Int] = []
+
+                    while temp.count < self.totalCells {
+                        let random = arc4random_uniform(UInt32(flickrImages!.count))
+                        if !temp.contains(Int(random)) {
+                            temp.append(Int(random))
+                        }
+                    }
+                    for random in temp {
+                        resultImages.append(flickrImages![random])
+                    }
+                    completion(resultImages)
+                } else {
+                    completion(flickrImages!)
+                }
+            } else {
+                completion(nil)
+            }
+        }
     }
     
+    // add annotation on map
     
+    func addAnnotation() {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+        mapView.showAnnotations([annotation], animated: true)
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        // MARK: Collection view Delegate functions
+        
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return photos.count
+        }
+
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! PhotoCell
+            cell.initPhotos(photos[indexPath.row])
+            return cell
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            toDelete = selectToDelete(indexPath: collectionView.indexPathsForSelectedItems!)
+            let cell = collectionView.cellForItem(at: indexPath)
+            DispatchQueue.main.async {
+                cell?.contentView.alpha = 0.5
+            }
+        }
+
+        func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+            toDelete = selectToDelete(indexPath: collectionView.indexPathsForSelectedItems!)
+            let cell = collectionView.cellForItem(at: indexPath)
+            DispatchQueue.main.async {
+                cell?.contentView.alpha = 1
+            }
+        }
+
+        func selectToDelete(indexPath: [IndexPath]) -> [Int] {
+            var selected:[Int] = []
+            for index in indexPath {
+                selected.append(index.row)
+            }
+            return selected
+        }
+        
+        // MARK: Collection view flow layout Delegate functions
+
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+            return spacing
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let bounds = collectionView.bounds
+    //        let width = UIScreen.main.bounds.width / 3 - spacing
+    //        let height = width
+            return CGSize(width: bounds.width / 2 , height: bounds.height / 4)
+        }
     
 }
