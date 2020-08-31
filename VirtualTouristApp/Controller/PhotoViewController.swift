@@ -68,7 +68,7 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
         noPhotos.isHidden = true
 
         collectionView.allowsMultipleSelection = true
-//        addAnnotation()
+        addAnnotation()
 
         // display results
         let savedPhoto = loadSavedPhotos()
@@ -79,6 +79,8 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
             displayNewResult()
         }
     }
+    
+    
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -111,7 +113,7 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
             for index in 0..<photoNumber {
                 photoArray.append(fetchedResultsController.object(at: IndexPath(row: index, section: 0)) as! Photo)
             }
-            return photoArray.sorted(by: {$0.index < $1.index})
+            return photoArray
         } catch {
             return nil
         }
@@ -162,7 +164,7 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
         getFlickrImages{ (images) in
             if images != nil {
                 DispatchQueue.main.async {
-//                    self.addData(flickrImages: images!, coreDataPin: self.corePin)
+                    self.addData(flickrImages: images!, coreDataPin: self.currentPin)
                     self.photos = self.loadSavedPhotos()!
                     self.displaySavedResult()
                     self.newCollection.isEnabled = true
@@ -206,6 +208,26 @@ class PhotoViewController: UIViewController, UICollectionViewDelegate ,UICollect
         }
     }
     
+    func addData(flickrImages: [FlickrImage], coreDataPin: Pin){
+        for image in flickrImages {
+            do{
+                let index = flickrImages.firstIndex{$0 === image}!
+                let photo = photos[index] as! [String:AnyObject]
+                
+                guard let imageurl = photo[image.imageURL()] as? String else {
+                    return
+                }
+                
+                let addPhoto = Photo(context: DataController.shared.viewContext)
+                addPhoto.pin = coreDataPin
+                addPhoto.imageURL = imageurl
+                try DataController.shared.saveContext()
+            } catch {
+                print("Add Failed")
+            }
+        }
+    }
+
     // add annotation on map
     
     func addAnnotation() {

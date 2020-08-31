@@ -18,6 +18,7 @@
 		260A34CE24FD69E300008183 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34CD24FD69E300008183 /* PhotoViewController.swift */; };
 		260A34D224FD8D7B00008183 /* FlickrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34D124FD8D7A00008183 /* FlickrAPI.swift */; };
 		260A34D424FD8DA900008183 /* FlickrImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34D324FD8DA900008183 /* FlickrImage.swift */; };
+		260A34D624FD8ED100008183 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260A34D524FD8ED100008183 /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		260A34CD24FD69E300008183 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		260A34D124FD8D7A00008183 /* FlickrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
 		260A34D324FD8DA900008183 /* FlickrImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrImage.swift; sourceTree = "<group>"; };
+		260A34D524FD8ED100008183 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			children = (
 				260A34B724FD5F9700008183 /* VirtualTouristApp.xcdatamodeld */,
 				260A34C924FD62B100008183 /* DataController.swift */,
+				260A34D524FD8ED100008183 /* PhotoCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				260A34CA24FD62B100008183 /* DataController.swift in Sources */,
+				260A34D624FD8ED100008183 /* PhotoCell.swift in Sources */,
 				260A34D224FD8D7B00008183 /* FlickrAPI.swift in Sources */,
 				260A34D424FD8DA900008183 /* FlickrImage.swift in Sources */,
 				260A34B924FD5F9700008183 /* VirtualTouristApp.xcdatamodeld in Sources */,

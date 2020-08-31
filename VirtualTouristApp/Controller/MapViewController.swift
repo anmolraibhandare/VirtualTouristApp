@@ -20,6 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
 
     var editButtonMode: Bool = false
     var gestureMode: Bool = false
+    var currentPins:[Pin] = []
     
     var fetchedResultsController:NSFetchedResultsController<Pin>!
     
@@ -41,6 +42,33 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         deletePin.isHidden = true
         navigationItem.rightBarButtonItem = editButtonItem
         editButtonMode = false
+        
+        let savedPins = loadSavedPins()
+
+        if savedPins != nil {
+            currentPins = savedPins!
+
+            for pin in currentPins {
+                let coordinates = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+                addAnnotations(coordinate: coordinates)
+            }
+        }
+    }
+    
+    func loadSavedPins() -> [Pin]? {
+        do {
+            var pinArray:[Pin] = []
+            setUpFetchedResultsController()
+            let pinNumber = try fetchedResultsController.managedObjectContext.count(for: fetchedResultsController.fetchRequest)
+
+            for index in 0..<pinNumber {
+                pinArray.append(fetchedResultsController.object(at: IndexPath(row: index, section: 0)) )
+            }
+            return pinArray
+
+        } catch {
+            return nil
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -85,10 +113,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     // MARK: Segue to PhotoViewController
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination as? PhotoViewController {
-            let pin = sender as! Pin
-            //viewController.pinTap = pin
+         if segue.identifier == "PinPhotos" {
+            let destination = segue.destination as! PhotoViewController
+            let coordinate = sender as! CLLocationCoordinate2D
+            destination.coordinate = coordinate
+
+            for pin in currentPins {
+                if pin.latitude == coordinate.latitude && pin.longitude == coordinate.longitude {
+                    destination.currentPin = pin
+                    break
+                
+                }
+            }
         }
+        
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
